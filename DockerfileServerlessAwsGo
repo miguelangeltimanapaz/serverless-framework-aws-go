@@ -1,0 +1,14 @@
+FROM ubuntu:20.04
+RUN apt-get update && apt-get install -y curl unzip wget
+RUN curl -o- -L https://slss.io/install | VERSION=2.51.2 bash
+ENV GOROOT="/opt/go"
+ENV GOBIN="/opt/go/bin"
+ENV GOPATH="/root/go"
+ENV PATH="/opt/go/bin:$HOME/.serverless/bin:$PATH"
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
+RUN mv awscliv2.zip /opt/.
+RUN cd /opt && unzip awscliv2.zip
+RUN /opt/aws/install
+RUN wget https://golang.org/dl/go1.16.5.linux-amd64.tar.gz
+RUN mv go1.16.5.linux-amd64.tar.gz /opt/.
+RUN cd /opt && tar -xzvf go1.16.5.linux-amd64.tar.gz
